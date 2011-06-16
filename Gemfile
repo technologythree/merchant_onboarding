@@ -7,7 +7,7 @@ gem 'rails', '~> 3.0.9'
 
 gem 'sqlite3'
 
-gem 'rake', '~> 0.9.2'
+gem 'rake', '~> 0.8.7'
 # gem 'google_places'
 
 # Use unicorn as the web server
