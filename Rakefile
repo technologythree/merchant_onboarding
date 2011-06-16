@@ -8,4 +8,17 @@ require 'rake'
 #   include Rake::DSL if defined?(Rake::DSL)
 # end
 
+# Rake Fix Code start
+# NOTE: change 'Anelis' to your app's module name (see config/application.rb)
+module ::MerchantOnboarding
+  class Application
+    include Rake::DSL
+  end
+end
+
+module ::RakeFileUtils
+  extend Rake::FileUtilsExt
+end
+# Rake Fix Code end
+
 MerchantOnboarding::Application.load_tasks
