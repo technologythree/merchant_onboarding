@@ -10,6 +10,12 @@ gem 'sqlite3'
 gem 'rake', '~> 0.8.7'
 # gem 'google_places'
 
+gem "jquery-rails"
+
+gem 'httparty'
+gem 'crack'
+gem 'geocoder'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

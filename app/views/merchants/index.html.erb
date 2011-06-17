@@ -3,7 +3,7 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Street</th>
+    <th>Address</th>
     <th>City</th>
     <th>State</th>
     <th>Zipcode</th>
@@ -21,27 +21,16 @@
     <th></th>
   </tr>
 
-<% @merchants.each do |merchant| %>
-  <tr>
-    <td><%= merchant.name %></td>
-    <td><%= merchant.street %></td>
-    <td><%= merchant.city %></td>
-    <td><%= merchant.state %></td>
-    <td><%= merchant.zipcode %></td>
-    <td><%= merchant.country %></td>
-    <td><%= merchant.phone_number %></td>
-    <td><%= merchant.fax %></td>
-    <td><%= merchant.email %></td>
-    <td><%= merchant.tax_id %></td>
-    <td><%= merchant.contact_name %></td>
-    <td><%= merchant.merchant_type %></td>
-    <td><%= merchant.merchant_device_type %></td>
-    <td><%= merchant.status %></td>
-    <td><%= link_to 'Show', merchant %></td>
-    <td><%= link_to 'Edit', edit_merchant_path(merchant) %></td>
-    <td><%= link_to 'Destroy', merchant, :confirm => 'Are you sure?', :method => :delete %></td>
-  </tr>
-<% end %>
+	<% @places.each do |spot| %>
+	  <tr>
+	    <td><%= spot['name'] %></td>
+	    <td><%= spot['vicinity'] %></td>
+	    <td><%= image_tag(spot['icon']) %></td>
+	    <td><%= link_to "Import", :controller => "merchants", :action => "import", :reference => spot['reference'] %></td>
+	    <td><%= link_to "Show", :controller => "merchants", :action => "show", :reference => spot['reference'] %></td>
+	  </tr>
+	<% end %>
+
 </table>
 
 <br />

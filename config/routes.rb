@@ -1,4 +1,9 @@
 MerchantOnboarding::Application.routes.draw do
+
+  match 'merchants/:reference/show' => 'merchants#show', :as => :show
+  match 'merchants/list' => 'merchants#list', :as => :list
+  match 'merchants/:reference/import' => 'merchants#import', :as => :import
+
   resources :merchants
 
   # The priority is based upon order of creation:
