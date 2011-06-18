@@ -1,5 +1,6 @@
 MerchantOnboarding::Application.routes.draw do
 
+  match 'merchants/detail/:id' => 'merchants#detail', :as => :detail
   match 'merchants/populate' => 'merchants#populate', :as => :populate
   match 'merchants/:reference/show' => 'merchants#show', :as => :show
   match 'merchants/list' => 'merchants#list', :as => :list
@@ -56,7 +57,7 @@ MerchantOnboarding::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => "welcome#index"
+  root :to => "merchants#index"
 
   # See how all your routes lay out with "rake routes"
 

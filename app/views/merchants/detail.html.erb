@@ -1,75 +1,33 @@
-<p id="notice"><%= notice %></p>
+<div data-role="header">
+  <h1><%= @merchant.name %> <strong><em>(<%= @merchant.status %>)</em></strong></h1>
+	<%= link_to 'Home', merchants_url, "class" => "ui-btn-right", "data-icon" => "home", "data-iconpos" => "notext" %>
+	<%= link_to 'Back', root_url, "data-rel" => "back", "data-icon" => "arrow-l", "class" => "ui-btn-left" %>
+</div>
+ 
+<div data-role="content" data-theme="b">
+	<ul data-role="listview">
+<!-- g -->
+	 <li data-theme="b" class="ui-btn ui-btn-icon-right ui-li ui-btn-up-b">
+		<div class="ui-btn-inner ui-li">
+			<div class="ui-btn-text">
+				<h3 class="ui-li-heading"><%= @merchant.name %></h3>
+				<p class="ui-li-desc">Status: <strong><em>(<%= @merchant.status %>)</em></strong></p>
+				<p class="ui-li-desc">Business Type: <%= @merchant.merchant_type %></p>
+				<p class="ui-li-desc">Device Type: <%= @merchant.merchant_device_type %></p>
+				<p class="ui-li-desc">Tax ID: <%= @merchant.tax_id %></p>
+				<p class="ui-li-desc">
+					 Address: <%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zipcode %>, <%= @merchant.country %>
+				</p>
+				<p class="ui-li-desc">Contact:</p>
+				<p class="ui-li-desc"><%= @merchant.contact_name %></p>
+				<p class="ui-li-desc">(P): <%= @merchant.phone_number %></p>
+				<p class="ui-li-desc">(F): <%= @merchant.fax %></p>
+				<p class="ui-li-desc">Email: <%= mail_to @merchant.email %></p>
+			</div>
+		 </div>
+		</li>
+	</ul>
 
-<p>
-  <b>Name:</b>
-  <%= @merchant.name %>
-</p>
-
-<p>
-  <b>Street:</b>
-  <%= @merchant.street %>
-</p>
-
-<p>
-  <b>City:</b>
-  <%= @merchant.city %>
-</p>
-
-<p>
-  <b>State:</b>
-  <%= @merchant.state %>
-</p>
-
-<p>
-  <b>Zipcode:</b>
-  <%= @merchant.zipcode %>
-</p>
-
-<p>
-  <b>Country:</b>
-  <%= @merchant.country %>
-</p>
-
-<p>
-  <b>Phone number:</b>
-  <%= @merchant.phone_number %>
-</p>
-
-<p>
-  <b>Fax:</b>
-  <%= @merchant.fax %>
-</p>
-
-<p>
-  <b>Email:</b>
-  <%= @merchant.email %>
-</p>
-
-<p>
-  <b>Tax:</b>
-  <%= @merchant.tax_id %>
-</p>
-
-<p>
-  <b>Contact name:</b>
-  <%= @merchant.contact_name %>
-</p>
-
-<p>
-  <b>Merchant type:</b>
-  <%= @merchant.merchant_type %>
-</p>
-
-<p>
-  <b>Merchant device type:</b>
-  <%= @merchant.merchant_device_type %>
-</p>
-
-<p>
-  <b>Status:</b>
-  <%= @merchant.status %>
-</p>
+</div>
 
 
-<%= link_to 'Edit', edit_merchant_path(@merchant) %> |
-<%= link_to 'Back', merchants_path %>

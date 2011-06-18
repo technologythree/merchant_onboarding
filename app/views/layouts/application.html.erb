@@ -13,101 +13,98 @@
   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
   <%= csrf_meta_tag %>
  
-    <script type="text/javascript">
-
-        $(document).ready(function() {
-               
-                        window.onload = function() {
-                            if (navigator.geolocation) {
-                                navigator.geolocation.getCurrentPosition(success, error);
-                            } else {
-                                error('Geolocation not supported');
-                            }
-                        };
-
-            $('#findme').click(function() {
-                $("#ajaxSpinnerImage").hide();
-                $("#places_list").html('');
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(success, error);
-                } else {
-                    error('Geolocation not supported');
-                }
-            });
+	<script type="text/javascript">
+	    $(document).ready(function() {
            
-            $('.fdcity').click(function() {
-                                // alert(this.getAttribute("data-message"));
-                                $("#ajaxSpinnerImage").show();
-                                $("#places_list").html('');
-                                $.get('/merchants/populate?' + this.getAttribute("data-message"), function(data) {
-         //     alert(data);
-                $("#ajaxSpinnerImage").hide();
-                $("#places_list").html(data);
+	         window.onload = function() {
+	             if (navigator.geolocation) {
+	                 navigator.geolocation.getCurrentPosition(success, error);
+	             } else {
+	                 error('Geolocation not supported');
+	             }
+	         };
 
-                        //  $("#places_list").html(data);
-                         // alert('Load was performed.');
-                });
-                                return false;
-            });
-           
-        }); 
-
-
-        function success(position) {
-                // alert(position.coords.latitude);
-                // alert(position.coords.longitude);
-                lat = position.coords.latitude;
-                lng = position.coords.longitude;
-                // lat=29.739227;
-                // lng=-95.467438;
-                //Atlanta
-                // lat=33.9027799;
-                // lng=-84.3562896;
-                $("#places_list").html('');
-                 $("#ajaxSpinnerImage").show();
-
-        //      $("#places_list").html("Locating Nearby Merchants...");
-         // $.getScript('/merchants?lat=' + position.coords.latitude + "&lng=" + position.coords.longitude);
-         $.get('/merchants/populate?lat=' + lat + "&lng=" + lng, function(data) {
-         //     alert(data);
-         $("#ajaxSpinnerImage").hide();
-                $("#places_list").html(data);
-
-                        //  $("#places_list").html(data);
-                         // alert('Load was performed.');
-                });
-        
-
-
-        }
+	        $('#findme').click(function() {
+	            $("#ajaxSpinnerImage").hide();
+					$("#ajaxSpinnerContainer").show();
+	            $("#places_list").html('');
+	            if (navigator.geolocation) {
+	                navigator.geolocation.getCurrentPosition(success, error);
+	            } else {
+	                error('Geolocation not supported');
+	            }
+	        });
        
+	        $('.fdcity').click(function() {
+	            // alert(this.getAttribute("data-message"));
+							$("#ajaxSpinnerContainer").show();            
+							$("#ajaxSpinnerImage").show();
+	            $("#places_list").html('');
+	            $.get('/merchants/populate?' + this.getAttribute("data-message"), function(data) {
+	     //     alert(data);
+	            $("#ajaxSpinnerImage").hide();
+	     				$("#ajaxSpinnerContainer").hide();
+	            $("#places_list").html(data);
 
-        function error(msg) {
-        //  var errMsg = typeof msg == 'string' ? msg : "Geolocation failed";
-        switch(error.code) 
-            { 
-                case error.PERMISSION_DENIED: alert("user did not share geolocation data"); 
-                break; 
- 
-                case error.POSITION_UNAVAILABLE: alert("could not detect current position"); 
-                break; 
- 
-                case error.TIMEOUT: alert("retrieving position timed out"); 
-                break; 
- 
-                default: alert("unknown error"); 
-                break; 
-            }
-         // $('#msg').html(errMsg);
-        }
-    </script>
+	                    //  $("#places_list").html(data);
+	                     // alert('Load was performed.');
+	            });
+	            return false;
+	        });
+       
+	    }); 
+
+	  function success(position) {
+	      // alert(position.coords.latitude);
+	      // alert(position.coords.longitude);
+	      lat = position.coords.latitude;
+	      lng = position.coords.longitude;
+	      // lat=29.739227;
+	      // lng=-95.467438;
+	      //Atlanta
+	      // lat=33.9027799;
+	      // lng=-84.3562896;
+	      $("#places_list").html('');
+	      $("#ajaxSpinnerImage").show();
+
+		    //      $("#places_list").html("Locating Nearby Merchants...");
+		     // $.getScript('/merchants?lat=' + position.coords.latitude + "&lng=" + position.coords.longitude);
+		     $.get('/merchants/populate?lat=' + lat + "&lng=" + lng, function(data) {
+		     //     alert(data);
+		     $("#ajaxSpinnerImage").hide();
+		     $("#ajaxSpinnerContainer").hide();
+		            $("#places_list").html(data);
+		             //  $("#places_list").html(data);
+		              // alert('Load was performed.');
+		      });
+	    }
+   
+	    function error(msg) {
+	    //  var errMsg = typeof msg == 'string' ? msg : "Geolocation failed";
+	    switch(error.code) 
+	        { 
+	            case error.PERMISSION_DENIED: alert("user did not share geolocation data"); 
+	            break; 
+
+	            case error.POSITION_UNAVAILABLE: alert("could not detect current position"); 
+	            break; 
+
+	            case error.TIMEOUT: alert("retrieving position timed out"); 
+	            break; 
+
+	            default: alert("unknown error"); 
+	            break; 
+	        }
+	     // $('#msg').html(errMsg);
+	    }
+	</script>
 <style>
-#ajaxSpinnerContainer {height:11px;}
+#ajaxSpinnerContainer {height:40px;}
 #ajaxSpinnerImage {display:none;}
 </style>
 </head>
 <body>
-	<div data-role="page" data-theme="a">
+	<div data-role="page" data-theme="b">
 		<%= yield %>
 	</div>
 </body>

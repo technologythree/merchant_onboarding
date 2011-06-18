@@ -37,7 +37,7 @@
     <td><%= merchant.merchant_type %></td>
     <td><%= merchant.merchant_device_type %></td>
     <td><%= merchant.status %></td>
-    <td><%= link_to 'Show', merchant %></td>
+    <td><%= link_to 'Show', :action => "detail", :id => merchant %></td>
     <td><%= link_to 'Edit', edit_merchant_path(merchant) %></td>
     <td><%= link_to 'Destroy', merchant, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>

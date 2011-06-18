@@ -1,11 +1,18 @@
 <!-- <h1>Merchants</h1> -->
-<ul data-role="listview">
+<ul data-role="listview" data-theme="b">
 <% @places.each do |spot| %>
-  <li data-theme="a">
-    <strong><%= spot['name'] %></strong><br><%= spot['vicinity'] %><br>
-   
-    <%= link_to "Import", :controller => "merchants", :action => "import", :reference => spot['reference'], "data-ajax" => "false", "data-icon" => "plus" %>
-    | <%= link_to "Show", :controller => "merchants", :action => "show", :reference => spot['reference'], "rel" => "external" %>
-  </li>
+ <li data-theme="b" class="ui-btn ui-btn-icon-right ui-li ui-btn-up-b">
+	<div class="ui-btn-inner ui-li">
+		<div class="ui-btn-text">
+		<%= link_to ({:controller => "merchants", :action => "import", :reference => spot['reference']}), "data-ajax" => "false", "class" =>"ui-link-inherit" do %>
+			<h3 class="ui-li-heading"><%= spot['name'] %></h3>
+			<p class="ui-li-desc">
+				<%= spot['vicinity'] %>
+			</p>
+			<% end %>
+			</div><span class="ui-icon ui-icon-plus" data-icon="plus"></span>
+	 </div>
+	</li>
 <% end %>
 </ul>
+

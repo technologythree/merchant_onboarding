@@ -27,37 +27,37 @@ class MerchantsController < ApplicationController
     render :layout => false
   end
 
-    def import
-      @merchant = Merchant.new
-      @place = Merchant.find_spot(params[:reference])
+  def import
+    @merchant = Merchant.new
+    @place = Merchant.find_spot(params[:reference])
 
-        @merchant.name = @place['name'].titleize
-        @streetAddress = @place['formatted_address'].split(',')
+      @merchant.name = @place['name'].titleize
+      @streetAddress = @place['formatted_address'].split(',')
 
-      if @streetAddress.size == 4 then
-        @merchant.street = @streetAddress.first.strip.titleize
-        @merchant.city = @streetAddress.second.strip.titleize
-        @merchant.state = @streetAddress.third.split(' ').first.strip.upcase
-        @merchant.zipcode = @streetAddress.third.split(' ').second.strip.titleize
-      else
-        @merchant.street = @streetAddress.first.strip.titleize + ' ' + @streetAddress.second.strip.titleize
-        @merchant.city = @streetAddress.third.strip.titleize
-        @merchant.state = @streetAddress.fourth.split(' ').first.strip.upcase
-        @merchant.zipcode = @streetAddress.fourth.split(' ').second.strip.titleize
-      end
-        @merchant.phone_number = @place['formatted_phone_number']
-        @merchant.merchant_type = @place['types'][0].titleize
-        
-        @merchant.country = 'US'
-        @merchant.merchant_device_type = 'POS'
-        @merchant.status = 'PENDING'
-
-        
-      respond_to do |format|
-        format.html # new.html.erb
-        format.xml  { render :xml => @merchant }
-      end
+    if @streetAddress.size == 4 then
+      @merchant.street = @streetAddress.first.strip.titleize
+      @merchant.city = @streetAddress.second.strip.titleize
+      @merchant.state = @streetAddress.third.split(' ').first.strip.upcase
+      @merchant.zipcode = @streetAddress.third.split(' ').second.strip.titleize
+    else
+      @merchant.street = @streetAddress.first.strip.titleize + ' ' + @streetAddress.second.strip.titleize
+      @merchant.city = @streetAddress.third.strip.titleize
+      @merchant.state = @streetAddress.fourth.split(' ').first.strip.upcase
+      @merchant.zipcode = @streetAddress.fourth.split(' ').second.strip.titleize
     end
+      @merchant.phone_number = @place['formatted_phone_number']
+      @merchant.merchant_type = @place['types'][0].titleize
+      
+      @merchant.country = 'US'
+      @merchant.merchant_device_type = 'POS'
+      @merchant.status = 'PENDING'
+
+      
+    respond_to do |format|
+      format.html 
+      format.xml  { render :xml => @merchant }
+    end
+  end
     
 
   def list
@@ -107,6 +107,10 @@ class MerchantsController < ApplicationController
   def create
     @merchant = Merchant.new(params[:merchant])
 
+    @merchant.country = 'US'
+    @merchant.merchant_device_type = 'POS'
+    @merchant.status = 'PENDING'
+    
     respond_to do |format|
       if @merchant.save
         format.html { render :action => "detail", :notice => 'Merchant was successfully created.' }
