@@ -1,26 +1,31 @@
 class MerchantsController < ApplicationController
   
   def index
-  	# @client = GooglePlaces::Client.new('AIzaSyAiRSj2K2KygVMVuqq60fceLRLaPMCJdY0')
-  	# @places = @client.spots(29.7628844,-95.3830615)
-  	# @places = @client.spots(29.739227, -95.467438, :types => ['lodging'])
-  	# @places = @client.spots(-33.8670522, 151.1957362, :types => 'restaurant')
-  	# @places = @client.spots(-33.867290, 151.2016020, :sensor => 'true')
-  	# @places = @client.spots(29.739227, -95.467438)
-  	# @places = Merchant.find_spots(29.739227, -95.467438)
-  	# atlanta first data @places = Merchant.find_spots(33.9027799,-84.3562896,['dentist','health','establishment','plumber'])
-  	# first data westheimer lat=29.739227&lng=-95.467438
-  	# first data memphis lat=35.194011&lng=-89.798199
-  	lat = params[:lat] || 33.9027799
-  	lng = params[:lng] || -84.3562896
-  	@places = Merchant.find_spots(lat, lng,['dentist','health','establishment','plumber'])
-  	# puts @places.to_yaml
+  end
 
-      respond_to do |format|
-        format.html # index.html.erb
-        format.xml  { render :xml => @merchants }
-      end
-    end
+  def populate
+    # @client = GooglePlaces::Client.new('AIzaSyAiRSj2K2KygVMVuqq60fceLRLaPMCJdY0')
+    # @places = @client.spots(29.7628844,-95.3830615)
+    # @places = @client.spots(29.739227, -95.467438, :types => ['lodging'])
+    # @places = @client.spots(-33.8670522, 151.1957362, :types => 'restaurant')
+    # @places = @client.spots(-33.867290, 151.2016020, :sensor => 'true')
+    # @places = @client.spots(29.739227, -95.467438)
+    # @places = Merchant.find_spots(29.739227, -95.467438)
+    # atlanta first data @places = Merchant.find_spots(33.9027799,-84.3562896,['dentist','health','establishment','plumber'])
+    # first data westheimer lat=29.739227&lng=-95.467438
+    # lat = params[:lat] || 35.194011
+    # lng = params[:lng] || -89.798199
+    puts "populate+++++++++++++++++++++++++++++++++++++++++++"
+    puts params[:lat]
+    puts params[:lng]
+    puts "+++++++++++++++++++++++++++++++++++++++++++"
+    lat = params[:lat]
+    lng = params[:lng]
+    @places = Merchant.find_spots(lat, lng, '')
+    # puts @places.to_yaml
+
+    render :layout => false
+  end
 
     def import
       @merchant = Merchant.new

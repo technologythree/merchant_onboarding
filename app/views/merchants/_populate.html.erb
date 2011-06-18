@@ -1,0 +1,11 @@
+<!-- <h1>Merchants</h1> -->
+<ul data-role="listview">
+<% @places.each do |spot| %>
+  <li data-theme="a">
+    <strong><%= spot['name'] %></strong><br><%= spot['vicinity'] %><br>
+   
+    <%= link_to "Import", :controller => "merchants", :action => "import", :reference => spot['reference'], "data-ajax" => "false", "data-icon" => "plus" %>
+    | <%= link_to "Show", :controller => "merchants", :action => "show", :reference => spot['reference'], "rel" => "external" %>
+  </li>
+<% end %>
+</ul>

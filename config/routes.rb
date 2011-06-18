@@ -1,5 +1,6 @@
 MerchantOnboarding::Application.routes.draw do
 
+  match 'merchants/populate' => 'merchants#populate', :as => :populate
   match 'merchants/:reference/show' => 'merchants#show', :as => :show
   match 'merchants/list' => 'merchants#list', :as => :list
   match 'merchants/:reference/import' => 'merchants#import', :as => :import
