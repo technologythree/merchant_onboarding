@@ -4,7 +4,7 @@
  <li data-theme="b" class="ui-btn ui-btn-icon-right ui-li ui-btn-up-b">
 	<div class="ui-btn-inner ui-li">
 		<div class="ui-btn-text">
-		<%= link_to ({:controller => "merchants", :action => "import", :reference => spot['reference']}), "data-ajax" => "false", "class" =>"ui-link-inherit" do %>
+		<%= link_to ({:controller => "merchants", :action => "import", :reference => spot['reference']}), "data-ajax" => "true", "class" =>"ui-link-inherit" do %>
 			<h3 class="ui-li-heading"><%= spot['name'] %></h3>
 			<p class="ui-li-desc">
 				<%= spot['vicinity'] %>
