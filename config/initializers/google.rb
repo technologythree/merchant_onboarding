@@ -1,0 +1,1 @@
+GOOGLE_CONFIG = YAML.load_file("#{Rails.root.to_s}/config/google.yml")[Rails.env]

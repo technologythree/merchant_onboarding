@@ -32,19 +32,37 @@ class MerchantsController < ApplicationController
     @place = Merchant.find_spot(params[:reference])
 
       @merchant.name = @place['name'].titleize
-      @streetAddress = @place['formatted_address'].split(',')
+   #   @streetAddress = @place['formatted_address'].split(',')
 
-    if @streetAddress.size == 4 then
-      @merchant.street = @streetAddress.first.strip.titleize
-      @merchant.city = @streetAddress.second.strip.titleize
-      @merchant.state = @streetAddress.third.split(' ').first.strip.upcase
-      @merchant.zipcode = @streetAddress.third.split(' ').second.strip.titleize
-    else
-      @merchant.street = @streetAddress.first.strip.titleize + ' ' + @streetAddress.second.strip.titleize
-      @merchant.city = @streetAddress.third.strip.titleize
-      @merchant.state = @streetAddress.fourth.split(' ').first.strip.upcase
-      @merchant.zipcode = @streetAddress.fourth.split(' ').second.strip.titleize
-    end
+      puts "%%%%%%%%%%%%%%%%%%%%%%%%"
+      puts types
+      puts formatted_address
+      puts street_number
+      puts street
+      puts city
+      puts state
+      puts state_code
+      puts country
+      puts country_code
+      puts postal_code
+      puts "%%%%%%%%%%%%%%%%%%%%%%%%"
+
+      @merchant.street = street_number + " " + street.titleize
+      @merchant.city = city.titleize
+      @merchant.state = state.upcase
+      @merchant.zipcode = postal_code
+
+    # if @streetAddress.size == 4 then
+    #   @merchant.street = @streetAddress.first.strip.titleize
+    #   @merchant.city = @streetAddress.second.strip.titleize
+    #   @merchant.state = @streetAddress.third.split(' ').first.strip.upcase
+    #   @merchant.zipcode = @streetAddress.third.split(' ').second.strip.titleize
+    # else
+    #   @merchant.street = @streetAddress.first.strip.titleize + ' ' + @streetAddress.second.strip.titleize
+    #   @merchant.city = @streetAddress.third.strip.titleize
+    #   @merchant.state = @streetAddress.fourth.split(' ').first.strip.upcase
+    #   @merchant.zipcode = @streetAddress.fourth.split(' ').second.strip.titleize
+    # end
       @merchant.phone_number = @place['formatted_phone_number']
       @merchant.merchant_type = @place['types'][0].titleize
       
@@ -52,13 +70,93 @@ class MerchantsController < ApplicationController
       @merchant.merchant_device_type = 'POS'
       @merchant.status = 'PENDING'
 
+
       
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @merchant }
     end
   end
-    
+
+  def address_components
+    @place['address_components']
+  end
+
+  def street_number
+    if street_number = address_components_of_type(:street_number).first
+      street_number['long_name']
+    end
+  end
+
+  def street
+    if street = address_components_of_type(:route).first
+      street['long_name']
+    end
+  end
+
+ 
+  def city
+    fields = [:locality, :sublocality,
+      :administrative_area_level_3,
+      :administrative_area_level_2]
+    fields.each do |f|
+      if entity = address_components_of_type(f).first
+        return entity['long_name']
+      end
+    end
+    return nil # no appropriate components found
+  end
+
+  def state
+    if state = address_components_of_type(:administrative_area_level_1).first
+      state['long_name']
+    end
+  end
+
+  def state_code
+    if state = address_components_of_type(:administrative_area_level_1).first
+      state['short_name']
+    end
+  end
+
+  def country
+    if country = address_components_of_type(:country).first
+      country['long_name']
+    end
+  end
+
+  def country_code
+    if country = address_components_of_type(:country).first
+      country['short_name']
+    end
+  end
+
+  def postal_code
+    if postal = address_components_of_type(:postal_code).first
+      postal['long_name']
+    end
+  end
+
+  def types
+        @place['types']
+      end
+
+      def formatted_address
+        @place['formatted_address']
+      end
+  ##
+  # Get address components of a given type. Valid types are defined in
+  # Google's Geocoding API documentation and include (among others):
+  #
+  #   :street_number
+  #   :locality
+  #   :neighborhood
+  #   :route
+  #   :postal_code
+  #
+  def address_components_of_type(type)
+    address_components.select{ |c| c['types'].include?(type.to_s) }
+  end   
 
   def list
     @merchants = Merchant.all
