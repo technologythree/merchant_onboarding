@@ -146,10 +146,10 @@ class MerchantsController < ApplicationController
     @place['types']
     puts @place['types']
   end
-  # 
-  # def formatted_address
-  #   @place['formatted_address']
-  # end
+ 
+  def formatted_address
+    @place['formatted_address']
+  end
   #
   # Get address components of a given type. Valid types are defined in
   # Google's Geocoding API documentation and include (among others):
