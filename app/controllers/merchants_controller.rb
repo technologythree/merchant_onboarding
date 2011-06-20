@@ -48,7 +48,7 @@ class MerchantsController < ApplicationController
       puts "%%%%%%%%%%%%%%%%%%%%%%%%"
 
     #  @merchant.street = street_number + ' ' + street.titleize
-      @merchant.city = city.titleize
+    #  @merchant.city = city.titleize
       @merchant.state = state.upcase
       @merchant.zipcode = postal_code
 
