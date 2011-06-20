@@ -142,9 +142,10 @@ class MerchantsController < ApplicationController
     end
   end
 
-  # def types
-  #   @place['types']
-  # end
+  def types
+    @place['types']
+    puts @place['types']
+  end
   # 
   # def formatted_address
   #   @place['formatted_address']
