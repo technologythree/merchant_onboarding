@@ -47,7 +47,7 @@ class MerchantsController < ApplicationController
       puts postal_code
       puts "%%%%%%%%%%%%%%%%%%%%%%%%"
 
-      @merchant.street = street_number + " " + street.titleize
+      @merchant.street = street_number + ' ' + street.titleize
       @merchant.city = city.titleize
       @merchant.state = state.upcase
       @merchant.zipcode = postal_code
@@ -80,6 +80,7 @@ class MerchantsController < ApplicationController
 
   def address_components
     @place['address_components']
+    puts @place['address_components']
   end
 
   def street_number
