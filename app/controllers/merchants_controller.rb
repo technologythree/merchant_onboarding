@@ -47,7 +47,7 @@ class MerchantsController < ApplicationController
       puts postal_code
       puts "%%%%%%%%%%%%%%%%%%%%%%%%"
 
-      @merchant.street = street_number + ' ' + street.titleize
+    #  @merchant.street = street_number + ' ' + street.titleize
       @merchant.city = city.titleize
       @merchant.state = state.upcase
       @merchant.zipcode = postal_code
@@ -87,7 +87,7 @@ class MerchantsController < ApplicationController
     if street_number = address_components_of_type(:street_number).first
       street_number['long_name']
     else
-      nil
+      return nil
     end
   end
 
@@ -95,7 +95,7 @@ class MerchantsController < ApplicationController
     if street = address_components_of_type(:route).first
       street['long_name']
     else
-      nil
+      return nil
     end
   end
 
@@ -142,14 +142,14 @@ class MerchantsController < ApplicationController
     end
   end
 
-  def types
-    @place['types']
-  end
-
-  def formatted_address
-    @place['formatted_address']
-  end
-  ##
+  # def types
+  #   @place['types']
+  # end
+  # 
+  # def formatted_address
+  #   @place['formatted_address']
+  # end
+  #
   # Get address components of a given type. Valid types are defined in
   # Google's Geocoding API documentation and include (among others):
   #
