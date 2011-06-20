@@ -49,8 +49,8 @@ class MerchantsController < ApplicationController
 
     #  @merchant.street = street_number + ' ' + street.titleize
     #  @merchant.city = city.titleize
-      @merchant.state = state.upcase
-      @merchant.zipcode = postal_code
+    #  @merchant.state = state.upcase
+    #  @merchant.zipcode = postal_code
 
     if @streetAddress.size == 4 then
       @merchant.street = @streetAddress.first.strip.titleize
