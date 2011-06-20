@@ -30,9 +30,9 @@ class MerchantsController < ApplicationController
   def import
     @merchant = Merchant.new
     @place = Merchant.find_spot(params[:reference])
-puts @place
-      @merchant.name = @place['name'].titleize
-      @streetAddress = @place['formatted_address'].split(',')
+
+    @merchant.name = @place['name'].titleize
+    @streetAddress = @place['formatted_address'].split(',')
 
       # puts "%%%%%%%%%%%%%%%%%%%%%%%%"
       # puts types
@@ -69,9 +69,7 @@ puts @place
       @merchant.country = 'US'
       @merchant.merchant_device_type = 'POS'
       @merchant.status = 'PENDING'
-
-
-      
+     
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @merchant }
@@ -160,9 +158,9 @@ puts @place
   #   :route
   #   :postal_code
   #
-  def address_components_of_type(type)
-    address_components.select{ |c| c['types'].include?(type.to_s) }
-  end   
+  # def address_components_of_type(type)
+  #   address_components.select{ |c| c['types'].include?(type.to_s) }
+  # end   
 
   def list
     @merchants = Merchant.all
