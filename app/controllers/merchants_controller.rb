@@ -30,7 +30,7 @@ class MerchantsController < ApplicationController
   def import
     @merchant = Merchant.new
     @place = Merchant.find_spot(params[:reference])
-
+puts @place
       @merchant.name = @place['name'].titleize
       @streetAddress = @place['formatted_address'].split(',')
 
