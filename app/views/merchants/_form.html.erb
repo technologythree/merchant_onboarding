@@ -30,10 +30,9 @@
     <%= f.label :zipcode %>
     <%= f.text_field :zipcode, :size => 9 %>
   </div>
-  <!-- <div class="field">
-    <%- f.label :country -%><br />
-    <%- f.text_field :country -%>
-  </div> -->
+
+	<% f.hidden_field :country %>
+
   <div class="field">
     <%= f.label :phone_number %>
     <%= f.telephone_field :phone_number %>

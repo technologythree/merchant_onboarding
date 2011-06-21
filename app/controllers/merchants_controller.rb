@@ -1,5 +1,6 @@
 class MerchantsController < ApplicationController
-  
+  before_filter :find_merchant, :only => [:detail, :edit, :update, :destroy]
+    
   def index
   end
 
@@ -15,96 +16,26 @@ class MerchantsController < ApplicationController
     @merchant = Merchant.new
     @place = Merchant.find_spot(params[:reference])
 
-    @merchant.name = @place['name']
+    @merchant.name = merchant_name
 
-    @merchant.street = "#{street_number} #{street}"  
+    @merchant.street = street_address
     @merchant.city = city
-    @merchant.state = state.upcase
+    @merchant.state = state
     @merchant.zipcode = postal_code
+    @merchant.country = country
+    
+    @merchant.phone_number = formatted_phone_number
+    @merchant.merchant_type = merchant_type
 
-    @merchant.phone_number = @place['formatted_phone_number']
-    @merchant.merchant_type = @place['types'][0].titleize
-
-    @merchant.country = 'US'
-    @merchant.merchant_device_type = 'POS'
-    @merchant.status = 'PENDING'
+    @merchant.merchant_device_type = merchant_device_type
+    @merchant.status = merchant_status
      
     respond_to do |format|
       format.html 
       format.xml  { render :xml => @merchant }
     end
   end
-
-  def address_components
-    @place['address_components']
-  end
   
-  def street_number
-    if street_number = address_components_of_type(:street_number).first
-      street_number['long_name']
-    end
-  end
-  
-  def street
-    if street = address_components_of_type(:route).first
-      street['long_name']
-    end
-  end
-  
-   
-  def city
-    fields = [:locality, :sublocality,
-      :administrative_area_level_3,
-      :administrative_area_level_2]
-    fields.each do |f|
-      if entity = address_components_of_type(f).first
-        return entity['long_name']
-      end
-    end
-    return nil # no appropriate components found
-  end
-  
-  def state
-    if state = address_components_of_type(:administrative_area_level_1).first
-      state['long_name']
-    end
-  end
-  
-  def state_code
-    if state = address_components_of_type(:administrative_area_level_1).first
-      state['short_name']
-    end
-  end
-  
-  def country
-    if country = address_components_of_type(:country).first
-      country['long_name']
-    end
-  end
-  
-  def country_code
-    if country = address_components_of_type(:country).first
-      country['short_name']
-    end
-  end
-  
-  def postal_code
-    if postal = address_components_of_type(:postal_code).first
-      postal['long_name']
-    end
-  end
-  
-  def types
-    @place['types']
-  end
-   
-  def formatted_address
-    @place['formatted_address']
-  end
-
-  def address_components_of_type(type)
-    address_components.select{ |c| c['types'].include?(type.to_s) }
-  end   
 
   def list
     @merchants = Merchant.all
@@ -126,8 +57,6 @@ class MerchantsController < ApplicationController
   end
   
   def detail
-    @merchant = Merchant.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @merchant }
@@ -146,16 +75,14 @@ class MerchantsController < ApplicationController
 
 
   def edit
-    @merchant = Merchant.find(params[:id])
   end
 
 
   def create
     @merchant = Merchant.new(params[:merchant])
 
-    @merchant.country = 'US'
-    @merchant.merchant_device_type = 'POS'
-    @merchant.status = 'PENDING'
+    @merchant.merchant_device_type = merchant_device_type
+    @merchant.status = merchant_status
     
     respond_to do |format|
       if @merchant.save
@@ -170,8 +97,6 @@ class MerchantsController < ApplicationController
 
 
   def update
-    @merchant = Merchant.find(params[:id])
-
     respond_to do |format|
       if @merchant.update_attributes(params[:merchant])
         format.html { render :action => "detail", :notice => 'Merchant was successfully updated.' }
@@ -185,7 +110,6 @@ class MerchantsController < ApplicationController
 
 
   def destroy
-    @merchant = Merchant.find(params[:id])
     @merchant.destroy
 
     respond_to do |format|
@@ -193,4 +117,107 @@ class MerchantsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+  
+  
+  
+private
+
+  def find_merchant
+    @merchant = Merchant.find(params[:id])
+  end
+
+  def merchant_name
+    @place['name']
+  end
+
+  def address_components
+    @place['address_components']
+  end
+
+  def street_address
+    "#{street_number} #{street}"
+  end
+   
+  def street_number
+    if street_number = address_components_of_type(:street_number).first
+      street_number['long_name']
+    end
+  end
+  
+  def street
+    if street = address_components_of_type(:route).first
+      street['long_name']
+    end
+  end
+   
+  def city
+    fields = [:locality, :sublocality,
+      :administrative_area_level_3,
+      :administrative_area_level_2]
+    fields.each do |f|
+      if entity = address_components_of_type(f).first
+        return entity['long_name']
+      end
+    end
+    return nil # no appropriate components found
+  end
+  
+  def state
+    if state = address_components_of_type(:administrative_area_level_1).first
+      state['long_name'].upcase
+    end
+  end
+  
+  def state_code
+    if state = address_components_of_type(:administrative_area_level_1).first
+      state['short_name'].upcase
+    end
+  end
+  
+  def country
+    if country = address_components_of_type(:country).first
+      country['long_name'].upcase
+    end
+  end
+  
+  def country_code
+    if country = address_components_of_type(:country).first
+      country['short_name'].upcase
+    end
+  end
+  
+  def postal_code
+    if postal = address_components_of_type(:postal_code).first
+      postal['long_name']
+    end
+  end
+  
+  def types
+    @place['types']
+  end
+   
+  def formatted_address
+    @place['formatted_address']
+  end
+  
+  def formatted_phone_number
+    @place['formatted_phone_number']
+  end
+  
+  def merchant_type
+    @place['types'][0].titleize
+  end
+
+  def merchant_device_type
+    'POS'
+  end
+  
+  def merchant_status
+    'PENDING'
+  end
+
+  def address_components_of_type(type)
+    address_components.select{ |c| c['types'].include?(type.to_s) }
+  end
+
 end
