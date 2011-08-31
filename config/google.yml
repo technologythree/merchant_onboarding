@@ -1,12 +1,12 @@
 development: 
-  google_places_key: <your_api_key>
+  google_places_key: AIzaSyAiRSj2K2KygVMVuqq60fceLRLaPMCJdY0
   spots_list_url: https://maps.googleapis.com/maps/api/place/search/json 
   spot_url: https://maps.googleapis.com/maps/api/place/details/json
 test: 
-  google_places_key: <your_api_key>
+  google_places_key: AIzaSyAiRSj2K2KygVMVuqq60fceLRLaPMCJdY0
   spots_list_url: https://maps.googleapis.com/maps/api/place/search/json
   spot_url: https://maps.googleapis.com/maps/api/place/details/json
 production: 
-  google_places_key: <your_api_key>
+  google_places_key: AIzaSyAiRSj2K2KygVMVuqq60fceLRLaPMCJdY0
   spots_list_url: https://maps.googleapis.com/maps/api/place/search/json
   spot_url: https://maps.googleapis.com/maps/api/place/details/json
