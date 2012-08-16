@@ -15,7 +15,7 @@
 				<p class="ui-li-desc">Device Type: <%= @merchant.merchant_device_type %></p>
 				<p class="ui-li-desc">Tax ID: <%= @merchant.tax_id %></p>
 				<p class="ui-li-desc">
-					 Address: <%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zipcode %>, <%= @merchant.country %>
+					 Address: <%= full_address(@merchant) %>
 				</p>
 				<p class="ui-li-desc">Contact:</p>
 				<p class="ui-li-desc"><%= @merchant.contact_name %></p>
